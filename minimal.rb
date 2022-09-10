@@ -1,3 +1,4 @@
+require 'open-uri'
 # GEMFILE
 ########################################
 
@@ -40,7 +41,7 @@ after_bundle do
   run 'rm app/controllers/application_controller.rb'
   file 'app/controllers/application_controller.rb', <<~RUBY
     class ApplicationController < ActionController::Base
-        before_action :authenticate_user!
+        #{  "protect_from_forgery with: :exception\n" if Rails.version < "5.2"} before_action :authenticate_user!
     end
   RUBY
 
