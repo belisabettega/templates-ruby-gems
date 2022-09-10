@@ -47,7 +47,7 @@ after_bundle do
 
   # migrate + pundit
   ########################################
-  rails_command 'db:migrate'
+  run 'bundle add pundit'
   rails_command 'g pundit:install'
 
 end
