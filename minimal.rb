@@ -1,10 +1,10 @@
 require 'open-uri'
 # GEMFILE
 ########################################
-
 inject_into_file 'Gemfile', before: 'group :development, :test do' do
     <<~RUBY
       gem 'devise'
+      gem 'simple_token_authentication'
     RUBY
   end
 
@@ -14,7 +14,15 @@ inject_into_file 'Gemfile', after: 'group :development, :test do' do
     gem 'pry-rails'
     gem 'dotenv-rails'
     gem 'rubocop', '~> 1.36', require: false
+    gem 'rspec-rails'
     RUBY
+end
+
+inject_into_file 'Gemfile', after: 'group :test do' do
+  <<-RUBY
+  gem 'factory_bot_rails'
+  gem 'faker'
+  RUBY
 end
 
 # AFTER BUNDLE
@@ -31,6 +39,8 @@ after_bundle do
   ########################################
   generate('devise:install')
   generate('devise', 'User')
+  run "spring stop"
+  
 
   # Dotenv
   ########################################
@@ -45,9 +55,17 @@ after_bundle do
     end
   RUBY
 
-  # migrate + pundit
+  # rspec + pundit install
   ########################################
   run 'bundle add pundit'
-  rails_command 'g pundit:install'
+  run 'bundle install'
+  generate('pundit:install')
+  run "spring stop"
+  generate('rspec:install')
+  run "guard init"
 
+  # simple token autjentication gem setup
+  #######################################
+  generate("migration addTokenToUsers 'authentication_token:string{30}:uniq'")
+  run "spring stop"
 end
