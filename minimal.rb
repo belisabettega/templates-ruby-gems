@@ -1,28 +1,19 @@
 require 'open-uri'
 # GEMFILE
 ########################################
-inject_into_file 'Gemfile', before: 'group :development, :test do' do
-    <<~RUBY
-      gem 'devise'
-      gem 'simple_token_authentication'
-    RUBY
-  end
-
-inject_into_file 'Gemfile', after: 'group :development, :test do' do
-    <<-RUBY
-    gem 'pry-byebug'
-    gem 'pry-rails'
-    gem 'dotenv-rails'
-    gem 'rubocop', '~> 1.36', require: false
-    gem 'rspec-rails'
-    RUBY
+gem_group :development, :test do
+  gem 'devise'
+  gem 'simple_token_authentication'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'dotenv-rails'
+  gem 'rubocop', '~> 1.36', require: false
+  gem 'rspec-rails'
 end
 
-inject_into_file 'Gemfile', after: 'group :test do' do
-  <<-RUBY
+gem_group :test do
   gem 'factory_bot_rails'
   gem 'faker'
-  RUBY
 end
 
 # AFTER BUNDLE
