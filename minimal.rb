@@ -7,7 +7,7 @@ gem 'simple_token_authentication'
 gem_group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'dotenv-rails'
+  # gem 'dotenv-rails'
   gem 'rubocop', '~> 1.36', require: false
   gem 'rspec-rails'
 end
@@ -22,10 +22,10 @@ end
 after_bundle do
     # Git ignore
   ########################################
-  append_file '.gitignore', <<~TXT
-  # Ignore .env file containing credentials.
-  .env*
-  TXT
+  # append_file '.gitignore', <<~TXT
+  # # Ignore .env file containing credentials.
+  # .env*
+  # TXT
 
     # Devise install + user
   ########################################
@@ -36,7 +36,7 @@ after_bundle do
 
   # Dotenv
   ########################################
-  run 'touch .env'
+  # run 'touch .env'
 
   # App controller
   ########################################
