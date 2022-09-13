@@ -1,9 +1,10 @@
 require 'open-uri'
 # GEMFILE
 ########################################
+gem 'devise'
+gem 'simple_token_authentication'
+
 gem_group :development, :test do
-  gem 'devise'
-  gem 'simple_token_authentication'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'
